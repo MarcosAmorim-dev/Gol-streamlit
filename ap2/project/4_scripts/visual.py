@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 import plotly.express as px
 st.title("DATA.GOL")
 st.write("Estes são gráficos sobre a empresa GOL.com")
-engine = create_engine(r'sqlite:///ap2\project\4_scripts\banco.db', echo=True)
+engine = create_engine(r'sqlite:////workspaces/Gol-streamlit/ap2/project/4_scripts/banco.db', echo=True)
 
 df = pd.read_sql('SELECT * FROM gol', con=engine)
 
