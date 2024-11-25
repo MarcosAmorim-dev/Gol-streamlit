@@ -4,11 +4,21 @@ import pandas as pd
 from sqlalchemy import create_engine
 import plotly.express as px
 st.title("DATA.GOL")
-st.write("Estes são gráficos sobre a empresa GOL.com")
-engine = create_engine(r'sqlite:///ap2/project/4_scripts/banco.db', echo=True)
+import os
 
-df = pd.read_sql('SELECT * FROM gol', con=engine)
+# Define the SQLite path
+database_path = os.path.join(os.path.dirname(__file__), 'ap2/project/4_scripts/banco.db')
 
+# Create engine
+try:
+    engine = create_engine(f'sqlite:///{database_path}', echo=True)
+    st.write("Database connection established.")
+    
+    # Fetch data from database
+    query = 'SELECT * FROM gol'
+    df = pd.read_sql(query, con=engine)    
+except Exception as e:
+    st.error(f"An error occurred: {e}")
 col1, col2 = st.columns(2)
 df_media = df.groupby('Dia')['Preco'].mean().reset_index()
 
